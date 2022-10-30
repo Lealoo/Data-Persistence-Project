@@ -11,12 +11,8 @@ public class ScoreTableManager : MonoBehaviour
     void Start()
     {
         // Adds some test data
-        AddNewScore("John", 4500);
-        AddNewScore("Max", 5520);
-        AddNewScore("Dave", 380);
-        AddNewScore("Steve", 6654);
-        AddNewScore("Mike", 11021);
-        AddNewScore("Teddy", 3252);
+        //AddNewScore("John", 4500);
+        scores = Env.bestScores;
         UpdateDisplay();
     }
 
@@ -36,7 +32,7 @@ public class ScoreTableManager : MonoBehaviour
         }
     }
 
-    void AddNewScore(string entryName, int entryScore)
+    public void AddNewScore(string entryName, int entryScore)
     {
         scores.Add(new HighScoreEntry { name = entryName, score = entryScore });
        

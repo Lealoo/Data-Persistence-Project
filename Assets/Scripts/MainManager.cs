@@ -26,7 +26,11 @@ public class MainManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        BestScoreText.text = "Best Score : " + Env.playerName + " : " + Env.bestScore;
+        //Env.bestScores = XMLManager.instance.LoadScores();
+        if (Env.bestScores.Count > 0)
+        {
+            BestScoreText.text = "Best Score : " + Env.bestScores[0].name + " : " + Env.bestScores[0].score;
+        }
         const float step = 0.6f;
         int perLine = Mathf.FloorToInt(4.0f / step);
         
@@ -74,6 +78,7 @@ public class MainManager : MonoBehaviour
         }
         else if (m_GameOver)
         {
+            
             if (Input.GetKeyDown(KeyCode.Space))
             {
                 SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
@@ -94,13 +99,26 @@ public class MainManager : MonoBehaviour
 
     public void GameOver()
     {
+        Env.bestScores.Add(new HighScoreEntry() { score = m_Points, name = Env.playerName });
+        Env.bestScores.Sort((HighScoreEntry x, HighScoreEntry y) => y.score.CompareTo(x.score));
+
+        if (Env.bestScores.Count == 10)
+        {
+            Env.bestScores.RemoveAt(9);
+        }
+
         if(Env.bestScore < m_Points)
         {
             Env.bestScore = m_Points;
+            
         }
         m_GameOver = true;
         GameOverText.SetActive(true);
-        BestScoreText.text = "Best Score : " + Env.playerName + " : " + Env.bestScore;
+        if (Env.bestScores.Count > 0)
+        {
+            BestScoreText.text = "Best Score : " + Env.bestScores[0].name + " : " + Env.bestScores[0].score;
+        }
+        XMLManager.instance.SaveScores(Env.bestScores);
     }
   
 }

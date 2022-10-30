@@ -10,19 +10,25 @@ public class MenuUIHandler : MonoBehaviour
     private MainManager gameManager;
     public TMP_InputField nameInputField;
     public string text;
+    public TextMeshProUGUI bestScoreText;
 
     // Start is called before the first frame update
     void Start()
     {
-       //text = nameInputField.text;
-
+        Env.bestScores = XMLManager.instance.LoadScores();
+        //text = nameInputField.text;
+        if(Env.bestScores.Count >0)
+        {
+            bestScoreText.text = "Best Score : " + Env.bestScores[0].name + " : " + Env.bestScores[0].score;
+        }
+        
     }
 
     // Update is called once per frame
     void Update()
     {
         Env.playerName = nameInputField.text;
-        Debug.Log(Env.playerName);
+        
     }
     public void StartNew()
     {
