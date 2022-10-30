@@ -1,10 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 
-public class Env : MonoBehaviour
+public class Env 
 {
 
     public static string playerName;
     public static int bestScore;
+    public static bool tipShownOnce = false;
 }

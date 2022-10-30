@@ -28,6 +28,10 @@ public class MenuUIHandler : MonoBehaviour
     {
         SceneManager.LoadScene(1);
     }
+    public void HighScoresBoard()
+    {
+        SceneManager.LoadScene(2);
+    }
     public void Exit()
     {
         Application.Quit();

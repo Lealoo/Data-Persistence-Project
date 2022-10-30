@@ -13,12 +13,14 @@ public class MainManager : MonoBehaviour
 
     public Text ScoreText;
     public GameObject GameOverText;
+    public GameObject StartGameText;
     public Text BestScoreText;
     
     private bool m_Started = false;
     private int m_Points;
     
     private bool m_GameOver = false;
+    //private bool tipShownOnce = false;
 
     
     // Start is called before the first frame update
@@ -45,9 +47,23 @@ public class MainManager : MonoBehaviour
     {
         if (!m_Started)
         {
+            if(!Env.tipShownOnce)
+            {
+                StartGameText.SetActive(true);
+                Env.tipShownOnce = true;
+            }
+            
+
+            if(Input.GetKeyDown(KeyCode.Escape))
+            {
+                StartGameText.SetActive(false);
+                SceneManager.LoadScene(0);
+                Env.tipShownOnce = false;
+            }
             if (Input.GetKeyDown(KeyCode.Space))
             {
                 m_Started = true;
+                StartGameText.SetActive(false);
                 float randomDirection = Random.Range(-1.0f, 1.0f);
                 Vector3 forceDir = new Vector3(randomDirection, 1, 0);
                 forceDir.Normalize();
@@ -61,6 +77,11 @@ public class MainManager : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.Space))
             {
                 SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+
+            }if(Input.GetKeyDown(KeyCode.Escape))
+            {
+                SceneManager.LoadScene(0);
+                Env.tipShownOnce = false;
             }
         }
     }
