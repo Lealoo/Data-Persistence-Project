@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using TMPro;
 
 public class MainManager : MonoBehaviour
 {
@@ -12,6 +13,7 @@ public class MainManager : MonoBehaviour
 
     public Text ScoreText;
     public GameObject GameOverText;
+    public Text BestScoreText;
     
     private bool m_Started = false;
     private int m_Points;
@@ -22,6 +24,7 @@ public class MainManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        BestScoreText.text = "Best Score : " + Env.playerName + " : " + Env.bestScore;
         const float step = 0.6f;
         int perLine = Mathf.FloorToInt(4.0f / step);
         
@@ -70,7 +73,13 @@ public class MainManager : MonoBehaviour
 
     public void GameOver()
     {
+        if(Env.bestScore < m_Points)
+        {
+            Env.bestScore = m_Points;
+        }
         m_GameOver = true;
         GameOverText.SetActive(true);
+        BestScoreText.text = "Best Score : " + Env.playerName + " : " + Env.bestScore;
     }
+  
 }
